@@ -11,6 +11,14 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+# Serialize JSON
+@app.route('/items/<int:item_id>/category/JSON')
+def itemCategoryJSON(item_id):
+    items = session.query(Item).filter_by(id=item_id).one()
+    itemCategories = session.query(ItemCategory).filter_by(
+        item_id=item_id).all()
+    return jsonify(itemCategories=[i.serialize for i in items])
+
 # Index route to home page
 @app.route('/')
 @app.route('/home')
@@ -30,7 +38,6 @@ def newItem():
     if request.method == 'POST':
         newItem = Item(name=request.form['name'])
         session.add(newItem)
-        session.flush()
         session.commit()
         return redirect(url_for('showAll'))
     else:
@@ -50,16 +57,21 @@ def editItem(item_id):
 # Delete route to delete item names
 @app.route('/items/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteItem(item_id):
-    itemDelete = session.query(
-        Item).filter_by(id=item_id).one()
+    itemDelete = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
         session.delete(itemDelete)
         session.commit()
-        return redirect(
-            url_for('showAll', item_id = item_id))
+        return redirect(url_for('showAll', item_id = item_id))
     else:
-        return render_template(
-            'editItem.html', itemDelete = itemDelete)
+        return render_template('editItem.html', itemDelete = itemDelete)
+
+# Show an Item Details
+@app.route('/items/<int:item_id>/')
+@app.route('/items/<int:item_id>/details/')
+def showItem(item_id):
+    items = session.query(Item).filter_by(id=item_id).one()
+    #itemDetails = session.query(ItemCategory).filter_by(item_id=item_id).all()
+    return render_template('details.html', items=items)
 
 if __name__ == '__main__':
     app.debug = True
