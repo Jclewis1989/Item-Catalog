@@ -26,8 +26,9 @@ class ItemCategory(Base):
     __tablename__ = 'item_category'
 
     name = Column(String(80), nullable=False)
+    description = Column(String(80), nullable=False)
+    category = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
-    Category = Column(String(250))
     item_id = Column(Integer, ForeignKey('item.id'))
     item = relationship(Item)
 
@@ -36,7 +37,9 @@ class ItemCategory(Base):
         """Return object data in easily serializeable format"""
         return {
             'name': self.name,
-            'description': self.description
+            'id': self.id,
+            'description': self.descriptionn,
+            'category': self.category,
         }
 
 engine = create_engine('sqlite:///itemCatalog.db')
