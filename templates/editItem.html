@@ -4,14 +4,17 @@
 <div class="row">
     <div class="col-lg-6">
             <form action="{{ url_for('editItem', item_id = item.id)}}" method="POST">
-                    <p>Item Name</p>
+                    <p>Item Details</p>
                         <input type ='text' size='30' class="form-control" name='name' placeholder='{{ item.name }}'><br>
                 <input type='submit' class="btn btn-md btn-warning" value='Edit'>
+                
                 </form>
                 
                 <form action="{{ url_for('deleteItem', item_id = item.id)}}" method="POST">
                     <input type='submit' class="btn btn-md btn-danger" value='Delete'>
                 </form>
+
+                <button type="button" class="btn btn-md btn-info"><a href="{{ url_for('showItem', item_id = item.id)}}">Add Details</a></button>
     </div>
 </div>
 {% endblock %}
