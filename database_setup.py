@@ -39,8 +39,5 @@ class ItemCategory(Base):
             'description': self.description
         }
 
-
 engine = create_engine('sqlite:///itemCatalog.db')
-
-
 Base.metadata.create_all(engine)
