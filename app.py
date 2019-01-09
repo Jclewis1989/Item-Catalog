@@ -39,7 +39,7 @@ def newItem():
         newItem = Item(name=request.form['name'])
         session.add(newItem)
         session.commit()
-        session.rollback()
+        session.rollback() #Running into errors if this code is not present
         return redirect(url_for('showAll'))
     else:
         return render_template('new.html')
@@ -70,23 +70,23 @@ def deleteItem(item_id):
 @app.route('/items/<int:item_id>/')
 @app.route('/items/<int:item_id>/details/')
 def showItem(item_id):
-    items = session.query(Item).filter_by(id=item_id).one()
+    item = session.query(Item).filter_by(id=item_id).one()
     itemDetails = session.query(ItemCategory).filter_by(item_id = item_id).all()
-    return itemDetails
-    #render_template('details.html', itemDetails=itemDetails, items=items)
+    return render_template('details.html', itemDetails=itemDetails, item=item)
 
-@app.route('/items/<int:item_id>/category/new/', methods=['GET', 'POST'])
+# Create new details for an item
+@app.route('/items/<int:item_id>/details/new/', methods=['GET', 'POST'])
 def newCategory(item_id):
     if request.method == 'POST':
-        newItem = ItemCategory(name=request.form['name'], description=request.form['description'], price=request.form['category'], item_id=item_id)
+        newItem = ItemCategory(description=request.form['description'], category=request.form['category'], item_id=item_id)
         session.add(newItem)
         session.commit()
 
         return redirect(url_for('showItem', item_id=item_id))
     else:
-        return render_template('details.html', item_id=item_id)
+        return render_template('newDetails.html', item_id=item_id)
 
-    return render_template('details.html', item=item)
+    return render_template('newDetails.html', item=item)
 
 if __name__ == '__main__':
     app.debug = True
