@@ -1,8 +1,29 @@
 {% include 'layout.html' %}
 
-{% for item in items %}
-<li>
-        <p><a href = "{{url_for('editItem',item_id = item.id)}}">{{ item.name }}</a></p>
-        
-</li>
-{% endfor %}
+{% block body %}
+<div class="container">
+                <!-- Page Heading -->
+                <h1 class="my-4">Item Catalog
+                                <small>List Below...</small>
+                              </h1>
+                        
+                              <!-- Project One -->
+                              <div class="row">
+                                      {% for item in items %}
+                                <div class="col-md-8 offset-md-2">
+                                  <h3>{{ item.name }}</h3>
+                                  <a class="btn btn-primary" href="{{url_for('editItem',item_id = item.id)}}">Item Details</a>
+                                </div>
+                                      {% endfor %}
+                              </div>
+                              <!-- /.row -->
+                        
+                              <hr>
+                        
+                              <hr>
+                        
+                            </div>
+                            <!-- /.container -->
+</div>
+
+        {% endblock %}
