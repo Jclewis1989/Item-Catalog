@@ -25,10 +25,9 @@ class Item(Base):
 class ItemCategory(Base):
     __tablename__ = 'item_category'
 
-    name = Column(String(80), nullable=False)
-    description = Column(String(80), nullable=False)
-    category = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
+    description = Column(String(80), nullable=False)
+    category = Column(String(80))
     item_id = Column(Integer, ForeignKey('item.id'))
     item = relationship(Item)
 
@@ -36,11 +35,10 @@ class ItemCategory(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'name': self.name,
             'id': self.id,
-            'description': self.descriptionn,
-            'category': self.category,
+            'description': self.description,
+            'category': self.category
         }
 
-engine = create_engine('sqlite:///itemCatalog.db')
+engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
