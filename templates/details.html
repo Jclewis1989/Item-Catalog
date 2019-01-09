@@ -1,3 +1,42 @@
 {% extends 'layout.html' %}
 
-{{ itemDetails }}
+{% block body %}
+
+ <!-- Page Content -->
+ <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+
+        <div class="card mt-4">
+          <div class="card-body">
+            <h3 class="card-title">{{item.name}}</h3>
+            <a href="{{ url_for('newCategory', item_id = item.id )}}">Create Details</a>
+
+          </div>
+        </div>
+        <!-- /.card -->
+
+        <div class="card card-outline-secondary my-4">
+            <hr>
+          {% for i in itemDetails %}
+          <div class="card-body">
+            <p><strong>Category: </strong>{{i.category}}</p>
+            <p><strong>Description: </strong>{{i.description}}</p>
+            <a href="#" class="btn btn-warning">Edit</a>
+            <a href="#" class="btn btn-danger">Delete</a>
+            <hr>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+
+  </div>
+  <!-- /.container -->
+  {% endblock %}
