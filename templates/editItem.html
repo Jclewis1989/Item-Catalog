@@ -5,7 +5,7 @@
     <div class="col-lg-6">
             <form action="{{ url_for('editItem', item_id = item.id)}}" method="POST">
                     <p>Item Details</p>
-                        <input type ='text' size='30' class="form-control" name='name' placeholder='{{ item.name }}'><br>
+                        <input type ='text' size='30' class="form-control" name='name' placeholder='{{ item.name }}'>
                 <input type='submit' class="btn btn-md btn-warning" value='Edit'>
                 
                 </form>
@@ -14,7 +14,7 @@
                     <input type='submit' class="btn btn-md btn-danger" value='Delete'>
                 </form>
 
-                <button type="button" class="btn btn-md btn-info"><a href="{{ url_for('showItem', item_id = item.id)}}">Add Details</a></button>
+                <button class="btn btn-md btn-primary"><a href="{{ url_for('showItem', item_id = item.id) }}">Show Details</a></button>
     </div>
 </div>
 {% endblock %}
