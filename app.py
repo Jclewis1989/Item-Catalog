@@ -77,16 +77,52 @@ def showItem(item_id):
 # Create new details for an item
 @app.route('/items/<int:item_id>/details/new/', methods=['GET', 'POST'])
 def newCategory(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
-        newItem = ItemCategory(description=request.form['description'], category=request.form['category'], item_id=item_id)
+        newItem = ItemCategory(description=request.form['description'], category=request.form['category'], name=request.form['name'], price=request.form['price'], stock=request.form['stock'], item_id=item_id)
         session.add(newItem)
         session.commit()
 
         return redirect(url_for('showItem', item_id=item_id))
     else:
-        return render_template('newDetails.html', item_id=item_id)
+        return render_template('newDetails.html', item=item, item_id = item_id)
 
     return render_template('newDetails.html', item=item)
+
+# Edit details for a catalog item
+@app.route('/items/<int:item_id>/details/<int:itemDetails_id>/edit', methods=['GET', 'POST'])
+def editDetails(item_id, itemDetails_id):
+    editedItem = session.query(ItemCategory).filter_by(id=item_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        if request.form['category']:
+            editedItem.category = request.form['category']
+        if request.form['price']:
+            editedItem.price = request.form['price']
+        if request.form['stock']:
+            editedItem.stock = request.form['stock']
+        session.add(editedItem)
+        session.commit()
+        return redirect(url_for('showItem', item_id=item_id))
+    else:
+
+        return render_template(
+            'newDetails.html', item_id=item_id, itemDetails_id=itemDetails_id, item=editedItem)
+
+# Delete details for a catalog item
+@app.route('/items/<int:item_id>/details/<int:itemDetails_id>/delete', methods=['GET', 'POST'])
+def deleteDetails(item_id, itemDetails_id):
+    itemToDelete = session.query(ItemCategory).filter_by(id=item_id).one()
+    item = session.query(Item).filter_by(id=item_id).one()
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        return redirect(url_for('showItem', item_id=item_id))
+    else:
+        return render_template('details.html', item=item)
 
 if __name__ == '__main__':
     app.debug = True
