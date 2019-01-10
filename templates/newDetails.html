@@ -4,13 +4,26 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
-            <h1>Create Category &amp; Description</h1>
+            <h2>Create Item for <strong>{{ item.name }}</strong></h2>
                 <form class="form" action="" method="POST">
                         <div class="form-group">
-                                <input type="text" name="category" placeholder="category" class="form-control">
+                                <input type="textarea" name="name" placeholder="Item" class="form-control">    
+                        </div>
+                        <p>Categories:</p>
+                        <div class="form-group">
+                                <input type="radio" name="category" value="Sports"> Sports
+                                <input type="radio" name="category" value="Photography"> Photography
+                                <input type="radio" name="category" value="Literature"> Literature
+                                <input type="radio" name="category" value="Electronics"> Electronics
                         </div>
                         <div class="form-group">
-                                <input type="text" name="description" placeholder="Description" class="form-control">    
+                                <input type="textarea" name="description" placeholder="Description" class="form-control">    
+                        </div>
+                        <div class="form-group">
+                                <input type="textarea" name="price" placeholder="Price" class="form-control">    
+                        </div>
+                        <div class="form-group">
+                                <input type="textarea" name="stock" placeholder="Stock" class="form-control">    
                         </div>
                         <button type="submit" class="btn btn-success">Create Details</button>
                     </form>
