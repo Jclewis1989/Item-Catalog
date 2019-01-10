@@ -26,8 +26,11 @@ class ItemCategory(Base):
     __tablename__ = 'item_category'
 
     id = Column(Integer, primary_key=True)
+    name = Column(String(80), nullable=False)
+    price = Column(String(80), nullable=False)
     description = Column(String(80), nullable=False)
-    category = Column(String(80))
+    category = Column(String(80), nullable=False)
+    stock = Column(String(80), nullable=False)
     item_id = Column(Integer, ForeignKey('item.id'))
     item = relationship(Item)
 
@@ -37,7 +40,10 @@ class ItemCategory(Base):
         return {
             'id': self.id,
             'description': self.description,
-            'category': self.category
+            'category': self.category,
+            'name': self.name,
+            'price': self.price,
+            'stock': self.stock,
         }
 
 engine = create_engine('sqlite:///catalog.db')
