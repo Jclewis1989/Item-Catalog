@@ -117,7 +117,7 @@ def editDetails(item_id, itemDetails_id):
 def deleteDetails(item_id, itemDetails_id):
     itemToDelete = session.query(ItemCategory).filter_by(id=item_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
-    if request.method == 'POST':
+    if request.method == 'POST': # Post must come from a form, not href! Fix later today
         session.delete(itemToDelete)
         session.commit()
         return redirect(url_for('showItem', item_id=item_id))
