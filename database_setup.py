@@ -2,7 +2,7 @@ import os
 import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy import create_engine
 
 Base = declarative_base()
@@ -32,7 +32,7 @@ class ItemCategory(Base):
     category = Column(String(80), nullable=False)
     stock = Column(String(80), nullable=False)
     item_id = Column(Integer, ForeignKey('item.id'))
-    item = relationship(Item)
+    item = relationship(Item, backref=backref("item", cascade="all,delete"))
 
     @property
     def serialize(self):
