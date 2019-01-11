@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
-            <h2>Create Item for <strong>{{ itemName.name }}</strong></h2>
+            <h2>Create Item for <strong>{{ items.name }}</strong></h2>
                 <form class="form" action="" method="POST">
                         <div class="form-group">
-                                <input type="textarea" name="name" placeholder="Item" class="form-control">    
+                                <input type="textarea" name="name" placeholder="Item" class="form-control details__name">    
                         </div>
                         <p>Categories:</p>
                         <div class="form-group">
@@ -25,7 +25,7 @@
                         <div class="form-group">
                                 <input type="textarea" name="stock" placeholder="Stock" class="form-control">    
                         </div>
-                        <button type="submit" class="btn btn-success">Create Details</button>
+                        <button type="submit" class="btn btn-success submit">Create Details</button>
                     </form>
         </div>
     </div>
