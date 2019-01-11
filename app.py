@@ -77,7 +77,7 @@ def showItem(item_id):
 # Create new details for an item
 @app.route('/items/<int:item_id>/details/new/', methods=['GET', 'POST'])
 def newCategory(item_id):
-    item = session.query(Item).filter_by(id=item_id).one()
+    items = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
         newItem = ItemCategory(description=request.form['description'], category=request.form['category'], name=request.form['name'], price=request.form['price'], stock=request.form['stock'], item_id=item_id)
         session.add(newItem)
@@ -85,13 +85,14 @@ def newCategory(item_id):
 
         return redirect(url_for('showItem', item_id=item_id))
     else:
-        return render_template('newDetails.html', item=item, item_id = item_id)
+        return render_template('newDetails.html', itemName = items, item_id = item_id)
 
-    return render_template('newDetails.html', item=item)
+    return render_template('newDetails.html', itemName = items)
 
 # Edit details for a catalog item
 @app.route('/items/<int:item_id>/details/<int:itemDetails_id>/edit', methods=['GET', 'POST'])
 def editDetails(item_id, itemDetails_id):
+    itemName = session.query(Item).filter_by(id=item_id).one()
     editedItem = session.query(ItemCategory).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -108,9 +109,8 @@ def editDetails(item_id, itemDetails_id):
         session.commit()
         return redirect(url_for('showItem', item_id=item_id))
     else:
-
         return render_template(
-            'newDetails.html', item_id=item_id, itemDetails_id=itemDetails_id, item=editedItem)
+            'newDetails.html', item_id=item_id, itemDetails_id=itemDetails_id, item=editedItem, itemName = items)
 
 # Delete details for a catalog item
 @app.route('/items/<int:item_id>/details/<int:itemDetails_id>/delete', methods=['GET', 'POST'])
