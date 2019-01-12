@@ -1,0 +1,14 @@
+.error {
+    border: 1px solid #980000;
+}
+
+.success {
+    border: 1px solid green;
+}
+
+.element {
+    color: #980000;
+    text-transform: uppercase;
+    padding: .15rem;
+    font-size: 12px;
+}
