@@ -2,7 +2,7 @@
 CODE LOGIC:
 val__category() deserves a reason. I was unable to successfully use a loop(for OR forEach) to iterature through
 the radio buttons for the purpose of generating an error message if one or none were selected.
-It is not KISS logic or DRY code, and I hope to revisit in the future so I can figure a most likley overlooked easy solution to my problem.
+It is not KISS logic nor DRY code, and I hope to revisit in the future so I can figure a most likley overlooked easy solution to my problem.
 In the meantime, I used 4 separate classes one for each radio button and passed their values in as parameters in the sumAll() function
 Enjoy...
 */
@@ -22,7 +22,7 @@ const MOD = (() => {
         price: '.price',
         stock: '.stock',
         button: '.submit',
-        form: 'form',
+        form: '.form-details',
         element: '.element'
     }
 
@@ -85,7 +85,7 @@ const MOD = (() => {
     }
 
     let sumAll = () => {
-        btn.addEventListener('click', function(e) {
+        form.addEventListener('submit', function(e) {
             if(val__name(name) === true && val__category(sports, photo, lit, elect) === true && val__description(desc) === true && val__price(price) === true) {
                 return true;
             } else {
