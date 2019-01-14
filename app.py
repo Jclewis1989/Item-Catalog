@@ -1,7 +1,10 @@
 from flask import Flask, render_template, url_for, request, redirect, jsonify
+from flask_dance.contrib.google import make_google_blueprint, google
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Item, ItemCategory
+from flask_login import LoginManager, UserMixin, current_user, login_required, login_user, logout_user
+import config
 
 app = Flask(__name__)
 
@@ -11,6 +14,36 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+app.secret_key = config.API_SECRET_KEYS['app_secret']
+blueprint = make_google_blueprint(
+    client_id=config.API_SECRET_KEYS['client_id'],
+    client_secret=config.API_SECRET_KEYS['secret_key'],
+    scope=[
+        "https://www.googleapis.com/auth/plus.me",
+        "https://www.googleapis.com/auth/userinfo.email",
+    ]
+)
+app.register_blueprint(blueprint, url_prefix="/login")
+
+@app.route("/login")
+def register():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v2/userinfo")
+    assert resp.ok, resp.text
+    return render_template('index.html', google = google.authorized)
+
+@app.route('/logout')
+def logout():
+    token = blueprint.token["access_token"]
+    resp = google.post(
+        "https://accounts.google.com/o/oauth2/revoke",
+        params={"token": token},
+        headers={"Content-Type": "application/x-www-form-urlencoded"}
+    )
+    assert resp.ok, resp.text
+    logout_user()
+    return redirect(url_for(index))
 # Serialize JSON
 # Entire catalog item and details in JSON
 @app.route('/items/<int:item_id>/category/JSON')
