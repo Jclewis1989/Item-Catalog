@@ -32,6 +32,7 @@ const MOD = (() => {
     let lit = document.querySelector(DOM.category_3);
     let elect = document.querySelector(DOM.category_4);
     let desc = document.querySelector(DOM.description);
+    let stock = document.querySelector(DOM.stock);
     let price = document.querySelector(DOM.price);
     let btn = document.querySelector(DOM.button);
     let form = document.querySelector(DOM.form);
@@ -84,15 +85,28 @@ const MOD = (() => {
         }
     }
 
+    let val__stock = (x) => {
+        if(x.value && !isNaN(x.value)) {
+            x.classList.add('success');
+            x.classList.remove('error');
+            return true;
+        } else {
+            x.classList.add('error');
+            x.classList.remove('success');
+            return false;
+        }
+    }
+
     let sumAll = () => {
         form.addEventListener('submit', function(e) {
-            if(val__name(name) === true && val__category(sports, photo, lit, elect) === true && val__description(desc) === true && val__price(price) === true) {
+            if(val__name(name) === true && val__category(sports, photo, lit, elect) === true && val__description(desc) === true && val__price(price) === true && val__stock(stock) === true) {
                 return true;
             } else {
                 val__name(name);
                 val__category(sports, photo, lit, elect);
                 val__description(desc);
                 val__price(price);
+                val__stock(stock);
                 e.preventDefault();
             }
         })
