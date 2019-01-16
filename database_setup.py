@@ -8,6 +8,18 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String(250), nullable=False)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'email': self.email
+        }
 
 class Item(Base):
     __tablename__ = 'item'
