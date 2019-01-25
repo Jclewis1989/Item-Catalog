@@ -12,7 +12,7 @@
         <div class="card mt-4">
           <div class="card-body">
             <h3 class="card-title">{{item.name}}</h3>
-            <a href="{{ url_for('newCategory', item_id = item.id )}}">Create Item</a>
+            <a href="{{ url_for('posts.newCategory', item_id = item.id )}}">Create Item</a>
 
           </div>
         </div>
@@ -28,8 +28,8 @@
             <p><strong>Price: </strong> ${{ i.price }}</p>
             <p><strong>Inventory: </strong> {{ i.stock }} in <i>stock</i></p>
             <form class="form-inline" action="" method="POST">
-                <a href="{{ url_for('editDetails', item_id = item.id, itemDetails_id = i.id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
-              <button class="btn btn-danger" formaction="{{ url_for('deleteDetails', item_id = item.id, itemDetails_id = i.id )}}">
+                <a href="{{ url_for('posts.editDetails', item_id = item.id, itemDetails_id = i.id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+              <button class="btn btn-danger" formaction="{{ url_for('posts.deleteDetails', item_id = item.id, itemDetails_id = i.id )}}">
                 <i class="fas fa-trash"></i>
               </button>
             </form>

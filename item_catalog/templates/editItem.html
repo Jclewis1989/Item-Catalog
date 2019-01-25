@@ -4,17 +4,17 @@
 <div class="container">
         <div class="row">
                 <div class="col-lg-6">
-                        <form action="{{ url_for('editItem', item_id = item.id)}}" method="POST" class="form-inline">
+                        <form action="{{ url_for('posts.editItem', item_id = item.id)}}" method="POST" class="form-inline">
                                 <h3 class="h3 text-dark">Catalog Item</h3>
                                 <hr>
                                 <h4>{{ item.name }}</h4>
                                     <input type ='text' size='20' class="form-control" name='name' placeholder='{{ item.name }}' value="{{ item.name }}">
                             <button type='submit' class="btn btn-sm btn-warning"><i class="far fa-edit"></i></button>
                             
-                            <button formaction="{{ url_for('deleteItem', item_id = item.id)}}" type="submit" class='btn btn-sm btn-danger trash'><i class="fas fa-trash"></i></button>
+                            <button formaction="{{ url_for('posts.deleteItem', item_id = item.id)}}" type="submit" class='btn btn-sm btn-danger trash'><i class="fas fa-trash"></i></button>
         </form>
         <br>
-        <a href="{{ url_for('showItem', item_id = item.id) }}" class="btn btn-primary text-white">Show Details</a></button>
+        <a href="{{ url_for('posts.showItem', item_id = item.id) }}" class="btn btn-primary text-white">Show Details</a></button>
                 </div>
             </div>
 </div>

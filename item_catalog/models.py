@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+"""
 class User(Base):
     __tablename__ = 'user'
 
@@ -20,6 +21,7 @@ class User(Base):
             'id': self.id,
             'email': self.email
         }
+"""
 
 class Item(Base):
     __tablename__ = 'item'

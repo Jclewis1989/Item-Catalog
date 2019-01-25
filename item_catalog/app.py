@@ -1,4 +1,4 @@
-import os
+"""import os
 from flask import Flask, render_template, url_for, request, redirect, jsonify, session
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
@@ -144,3 +144,4 @@ def deleteDetails(item_id, itemDetails_id):
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
+    """
