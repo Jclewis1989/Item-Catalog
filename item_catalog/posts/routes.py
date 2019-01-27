@@ -1,9 +1,7 @@
-import os
-from flask import render_template, url_for, flash, redirect, request, abort, Blueprint, session
-from item_catalog import db
-from item_catalog.models import Base, Item, ItemCategory
+from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, session
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
+from item_catalog.models import Base, User, Item, ItemCategory
 
 posts = Blueprint('posts', __name__)
 
@@ -27,7 +25,6 @@ def newItem():
         newItem = Item(name=request.form['name'])
         session.add(newItem)
         session.commit()
-        session.rollback() #Running into errors if this code is not present
         return redirect(url_for('posts.showAll'))
     else:
         return render_template('new.html')
