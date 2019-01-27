@@ -1,5 +1,4 @@
-from flask import Flask, render_template, session, request, Blueprint
-from item_catalog.models import Base, Item, ItemCategory
+from flask import Flask, render_template, Blueprint
 
 main = Blueprint('main', __name__)
 
