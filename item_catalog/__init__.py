@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from item_catalog.models import Base, Item, ItemCategory
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
