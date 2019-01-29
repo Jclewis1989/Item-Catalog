@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, session
+from flask import Flask, render_template, url_for, redirect, request, Blueprint, session
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from item_catalog.models import Base, User, Item, ItemCategory
@@ -14,9 +14,10 @@ session = DBSession()
 # Items route to show all items
 @posts.route('/items/')
 def showAll():
-    items = session.query(Item).all()
+    result = engine.execute("SELECT * FROM item")
+    #items = session.query(Item).all()
     # Returning every item in the catalog to perform crud operations on
-    return render_template('items.html', items = items)
+    return render_template('items.html', items = result)
 
 # Create route to create new items in the catalog
 @posts.route('/items/new/', methods=['GET', 'POST'])
@@ -32,13 +33,15 @@ def newItem():
 # Edit route to edit item names
 @posts.route('/items/<int:item_id>/edit/', methods=['GET', 'POST'])
 def editItem(item_id):
-    editItem = session.query(Item).filter_by(id=item_id).one()
+    #editItem = session.query(Item).filter_by(id=item_id).one()
+    editedItem = engine.execute("SELECT item.name FROM item WHERE item.id = ?", item_id)
     if request.method == 'POST':
         if request.form['name']:
             editItem.name = request.form['name']
             return redirect(url_for('posts.showAll'))
     else:
-        return render_template('editItem.html', item = editItem)
+        for i in editedItem:
+            return render_template('editItem.html', item = i)
 
 # Delete route to delete item names
 @posts.route('/items/<int:item_id>/delete/', methods=['GET', 'POST'])
